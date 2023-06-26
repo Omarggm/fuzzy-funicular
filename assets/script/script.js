@@ -110,9 +110,7 @@ function calculateScore() {
     score +
     "</p>" +
     "<p>Questions answered correctly: " +
-    correctAnswer +
-    " out of " +
-    questions.length +
+    correctAnswer
     "</p>";
 
   var initials = prompt("Please enter your initials");
@@ -124,6 +122,7 @@ function calculateScore() {
   var scoreEntry = { initials: initials, score: score, correct: correctAnswer };
   highScores.push(scoreEntry);
   highScores.sort((a, b) => b.score - a.score);
+  highScores = highScores.slice(0, 5);
 
   localStorage.setItem("highScores", JSON.stringify(highScores));
 }
