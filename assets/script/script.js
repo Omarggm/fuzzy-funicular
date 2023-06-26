@@ -112,10 +112,35 @@ function calculateScore() {
     "</p>";
 
   var initials = prompt("Please enter your initials");
+
+  if (initials === null) {
+    initials = "Anonymous";
+  }
+
   localStorage.setItem("score", score);
   localStorage.setItem("initials", initials);
   localStorage.setItem("Correct Answers", correctAnswer);
+
 }
+
+window.onload = function () {
+    var storedscore = localStorage.getItem("score");
+    var storedinitials = localStorage.getItem("initials");
+    var storedcorrectAnswer = localStorage.getItem("Correct Answers");
+
+    if (storedscore !== null) {
+        score = parseInt(storedscore);
+    }
+
+    if (storedinitials !== null) {
+        initials = storedinitials;
+    }
+
+    if (storedcorrectAnswer !== null) {
+        correctAnswer = parseInt(storedcorrectAnswer);
+    }
+};
+ 
 
 startButton.addEventListener("click", function () {
   startTimer();
