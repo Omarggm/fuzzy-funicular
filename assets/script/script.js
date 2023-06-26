@@ -2,12 +2,13 @@ var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("startButton");
 var startOverButton = document.getElementById("startOverButton");
 var questionsContainer = document.getElementById("questionsContainer");
-var timer = 20;
+var timer = 60;
 var score = 0;
 var timerInterval;
 var questionIndex = 0;
 var currentQuestionIndex = 0;
 var correctAnswer = 0;
+var initials = prompt("Please enter your initials");
 
 var questions = [
   {
@@ -78,8 +79,9 @@ function checkAnswer(questionIndex, choiceIndex) {
   var question = questions[questionIndex];
 
   if (question.correctAnswer === choiceIndex) {
+    correctAnswer++;
   } else {
-    timer -= 5;
+    timer -= 10;
   }
 
   currentQuestionIndex++;
@@ -96,9 +98,16 @@ function checkAnswer(questionIndex, choiceIndex) {
 }
 
 function calculateScore() {
-    score = timer >= 0 ? timer : 0;
-    questionsContainer.innerHTML =
-        "<p>Your score is " + score + "</p>";
+    if (correctAnswer > 0) {
+        score = timer;
+    } else {
+        score = 0;
+    }
+    localStorage.setItem("score", score);
+    localStorage.setItem("initials", initials)
+    localStorage.setItem("Correct Answers", correctAnswer)
+    questionsContainer.innerHTML = 
+    "<p> Your score is " + score + "</p>";
 }
 
 startButton.addEventListener("click", function () {
