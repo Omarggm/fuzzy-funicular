@@ -2,12 +2,14 @@ var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("startButton");
 var startOverButton = document.getElementById("startOverButton");
 var questionsContainer = document.getElementById("questionsContainer");
+var highScoresContainer = document.getElementById("highScoresContainer");
 var timer = 60;
 var score = 0;
 var timerInterval;
 var questionIndex = 0;
 var currentQuestionIndex = 0;
 var correctAnswer = 0;
+var highScores = [];
 
 var questions = [
   {
@@ -39,6 +41,7 @@ function updateTimer() {
   if (timer < 0) {
     clearInterval(timerInterval);
     timerElement.textContent = "Time's Up!";
+    calculateScore();
   }
 }
 
@@ -102,10 +105,10 @@ function calculateScore() {
   }
 
   questionsContainer.innerHTML =
-    "<p> Your score is " +
+    "<p>Your score is " +
     score +
     "</p>" +
-    "<p> Questions answered correctly: " +
+    "<p>Questions answered correctly: " +
     correctAnswer +
     " out of " +
     questions.length +
@@ -117,30 +120,40 @@ function calculateScore() {
     initials = "Anonymous";
   }
 
-  localStorage.setItem("score", score);
-  localStorage.setItem("initials", initials);
-  localStorage.setItem("Correct Answers", correctAnswer);
+  var scoreEntry = { initials: initials, score: score, correct: correctAnswer };
+  highScores.push(scoreEntry);
+  highScores.sort((a, b) => b.score - a.score);
 
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+
+  displayHighScores();
+}
+
+function displayHighScores() {
+  highScoresContainer.innerHTML = "<h3>High Scores</h3>";
+
+  if (highScores.length > 0) {
+    var scoresHTML = "<ol>";
+
+    for (var i = 0; i < highScores.length; i++) {
+      scoresHTML += "<li>" + highScores[i].initials + " - " + highScores[i].score + "</li>";
+    }
+
+    scoresHTML += "</ol>";
+    highScoresContainer.innerHTML += scoresHTML;
+  } else {
+    highScoresContainer.innerHTML += "<p>No high scores yet.</p>";
+  }
 }
 
 window.onload = function () {
-    var storedscore = localStorage.getItem("score");
-    var storedinitials = localStorage.getItem("initials");
-    var storedcorrectAnswer = localStorage.getItem("Correct Answers");
+  var storedHighScores = localStorage.getItem("highScores");
 
-    if (storedscore !== null) {
-        score = parseInt(storedscore);
-    }
-
-    if (storedinitials !== null) {
-        initials = storedinitials;
-    }
-
-    if (storedcorrectAnswer !== null) {
-        correctAnswer = parseInt(storedcorrectAnswer);
-    }
+  if (storedHighScores !== null) {
+    highScores = JSON.parse(storedHighScores);
+    displayHighScores();
+  }
 };
- 
 
 startButton.addEventListener("click", function () {
   startTimer();
