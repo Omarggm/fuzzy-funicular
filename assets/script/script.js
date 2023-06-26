@@ -94,6 +94,7 @@ function checkAnswer(questionIndex, choiceIndex) {
     clearInterval(timerInterval);
     timerElement.textContent = "Quiz Complete!";
     calculateScore();
+    displayHighScores();
   }
 }
 
@@ -125,8 +126,6 @@ function calculateScore() {
   highScores.sort((a, b) => b.score - a.score);
 
   localStorage.setItem("highScores", JSON.stringify(highScores));
-
-  displayHighScores();
 }
 
 function displayHighScores() {
@@ -136,7 +135,7 @@ function displayHighScores() {
     var scoresHTML = "<ol>";
 
     for (var i = 0; i < highScores.length; i++) {
-      scoresHTML += "<li>" + highScores[i].initials + " - " + highScores[i].score + "</li>";
+      scoresHTML += "<li>" + highScores[i].initials + " - Score: " + highScores[i].score + " - Correct Answers: " + highScores[i].correct + "</li>";
     }
 
     scoresHTML += "</ol>";
@@ -151,7 +150,6 @@ window.onload = function () {
 
   if (storedHighScores !== null) {
     highScores = JSON.parse(storedHighScores);
-    displayHighScores();
   }
 };
 
