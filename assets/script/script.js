@@ -8,7 +8,6 @@ var timerInterval;
 var questionIndex = 0;
 var currentQuestionIndex = 0;
 var correctAnswer = 0;
-var initials = prompt("Please enter your initials");
 
 var questions = [
   {
@@ -90,24 +89,32 @@ function checkAnswer(questionIndex, choiceIndex) {
     showQuiz();
   } else {
     clearInterval(timerInterval);
-    timerElement.textContent = "Quiz Complete!"
-    calculateScore()
-    
-   ;
+    timerElement.textContent = "Quiz Complete!";
+    calculateScore();
   }
 }
 
 function calculateScore() {
-    if (correctAnswer > 0) {
-        score = timer;
-    } else {
-        score = 0;
-    }
-    localStorage.setItem("score", score);
-    localStorage.setItem("initials", initials)
-    localStorage.setItem("Correct Answers", correctAnswer)
-    questionsContainer.innerHTML = 
-    "<p> Your score is " + score + "</p>";
+  if (correctAnswer > 0) {
+    score = timer;
+  } else {
+    score = 0;
+  }
+
+  questionsContainer.innerHTML =
+    "<p> Your score is " +
+    score +
+    "</p>" +
+    "<p> Questions answered correctly: " +
+    correctAnswer +
+    " out of " +
+    questions.length +
+    "</p>";
+
+  var initials = prompt("Please enter your initials");
+  localStorage.setItem("score", score);
+  localStorage.setItem("initials", initials);
+  localStorage.setItem("Correct Answers", correctAnswer);
 }
 
 startButton.addEventListener("click", function () {
