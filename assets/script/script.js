@@ -3,7 +3,7 @@ var startButton = document.getElementById("startButton");
 var startOverButton = document.getElementById("startOverButton");
 var questionsContainer = document.getElementById("questionsContainer");
 var highScoresContainer = document.getElementById("highScoresContainer");
-var timer = 60;
+var timer = 5;
 var score = 0;
 var timerInterval;
 var questionIndex = 0;
@@ -42,6 +42,8 @@ function updateTimer() {
     clearInterval(timerInterval);
     timerElement.textContent = "Time's Up!";
     calculateScore();
+    displayHighScores();
+    return;
   }
 }
 
@@ -110,21 +112,27 @@ function calculateScore() {
     score +
     "</p>" +
     "<p>Questions answered correctly: " +
-    correctAnswer
-    "</p>";
+    correctAnswer;
+  ("</p>");
 
-  var initials = prompt("Please enter your initials");
+  if ((currentQuestionIndex === questions.length)) {
+    var initials = prompt("Please enter your initials");
 
-  if (initials === null) {
-    initials = "Anonymous";
+    if (initials === null) {
+      initials = "Anonymous";
+    }
+
+    var scoreEntry = {
+      initials: initials,
+      score: score,
+      correct: correctAnswer,
+    };
+    highScores.push(scoreEntry);
+    highScores.sort((a, b) => b.score - a.score);
+    highScores = highScores.slice(0, 5);
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
   }
-
-  var scoreEntry = { initials: initials, score: score, correct: correctAnswer };
-  highScores.push(scoreEntry);
-  highScores.sort((a, b) => b.score - a.score);
-  highScores = highScores.slice(0, 5);
-
-  localStorage.setItem("highScores", JSON.stringify(highScores));
 }
 
 function displayHighScores() {
@@ -134,7 +142,14 @@ function displayHighScores() {
     var scoresHTML = "<ol>";
 
     for (var i = 0; i < highScores.length; i++) {
-      scoresHTML += "<li>" + highScores[i].initials + " - Score: " + highScores[i].score + " - Correct Answers: " + highScores[i].correct + "</li>";
+      scoresHTML +=
+        "<li>" +
+        highScores[i].initials +
+        " - Score: " +
+        highScores[i].score +
+        " - Correct Answers: " +
+        highScores[i].correct +
+        "</li>";
     }
 
     scoresHTML += "</ol>";
