@@ -3,7 +3,7 @@ var startButton = document.getElementById("startButton");
 var startOverButton = document.getElementById("startOverButton");
 var questionsContainer = document.getElementById("questionsContainer");
 var highScoresContainer = document.getElementById("highScoresContainer");
-var timer = 5;
+var timer = 60;
 var score = 0;
 var timerInterval;
 var questionIndex = 0;
