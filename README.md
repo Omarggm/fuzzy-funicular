@@ -22,6 +22,11 @@ To use the Quiz Time Application, follow these steps:
 4. Read each question and click on the button corresponding to your chosen answer.
 5. After answering all the questions or when the timer runs out, the final score will be displayed along with the option to enter your initials.
 6. You can view the high scores by clicking the "Start Over" button after completing the quiz.
+
+## Usage 
+![Screenshot of deployed app]
+[Quiz Time]https://omarggm.github.io/fuzzy-funicular/
+
 ## Customization
 If you want to customize the quiz, you can modify the following:
 
