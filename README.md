@@ -24,7 +24,7 @@ To use the Quiz Time Application, follow these steps:
 6. You can view the high scores by clicking the "Start Over" button after completing the quiz.
 
 ## Usage 
-![screenshot of app](assets\Screenshot 2023-06-26 171931.png)
+![screenshot of app](assets/Screenshot 2023-06-26 171931.png)
 [Quiz Time](https://omarggm.github.io/fuzzy-funicular/)
 
 ## Customization
